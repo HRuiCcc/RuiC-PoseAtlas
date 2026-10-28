@@ -1,0 +1,18 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/thumbs/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/data/*
+  Cache-Control: public, max-age=300
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate

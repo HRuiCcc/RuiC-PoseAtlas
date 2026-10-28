@@ -1,0 +1,9 @@
+_source/
+scripts/
+docs/
+.git/
+.gitignore
+.assetsignore
+README.md
+LICENSE
+package.json
