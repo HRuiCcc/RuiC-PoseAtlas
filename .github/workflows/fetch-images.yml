@@ -1,4 +1,4 @@
-name: Mirror reference images
+name: Fetch image assets
 
 on:
   workflow_dispatch:
@@ -7,11 +7,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: mirror-images
+  group: fetch-images
   cancel-in-progress: false
 
 jobs:
-  mirror:
+  fetch-images:
     name: Download and commit image assets
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -32,7 +32,7 @@ jobs:
       - name: Verify data, translations and image files
         run: node scripts/verify.mjs
 
-      - name: Commit mirrored images
+      - name: Commit downloaded images
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -41,5 +41,5 @@ jobs:
             echo "Images already present; nothing to commit."
             exit 0
           fi
-          git commit -m "chore: mirror 1,439 originals and 1,439 thumbnails"
+          git commit -m "chore: refresh image assets"
           git push

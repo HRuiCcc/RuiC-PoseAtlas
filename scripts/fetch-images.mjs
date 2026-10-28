@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Mirrors every image referenced by data/poses.json into img/ and thumbs/.
- * Used by the "Mirror reference images" GitHub Actions workflow, and safe to
- * run locally: existing valid files are skipped, failed files are retried.
+ * Downloads every image referenced by data/poses.json into img/ and thumbs/.
+ * Used to restore assets in a fresh clone, and safe to run repeatedly:
+ * existing valid files are skipped, failed files are retried.
  */
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -21,12 +21,12 @@ if (files.length !== expected) {
 }
 
 const BASES = [
-  'https://raw.githubusercontent.com/anhao/ai-pose-gallery-zh/main/',
-  'https://cdn.jsdelivr.net/gh/anhao/ai-pose-gallery-zh@main/',
+  'https://raw.githubusercontent.com/HRuiCcc/RuiC-PoseAtlas/main/',
+  'https://cdn.jsdelivr.net/gh/HRuiCcc/RuiC-PoseAtlas@main/',
 ];
 const CONCURRENCY = 24;
 const ATTEMPTS = 6;
-const UA = 'RuiC-PoseAtlas image mirror (+https://github.com/HRuiCcc/RuiC-PoseAtlas)';
+const UA = 'RuiC-PoseAtlas image fetcher (+https://github.com/HRuiCcc/RuiC-PoseAtlas)';
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function signatureValid(rel, buffer) {

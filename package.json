@@ -8,7 +8,7 @@
     "start": "python3 -m http.server 8123 --bind 127.0.0.1",
     "data": "node scripts/import-data.mjs",
     "verify": "node scripts/verify.mjs",
-    "mirror": "node scripts/fetch-images.mjs"
+    "fetch-images": "node scripts/fetch-images.mjs"
   },
   "engines": {
     "node": ">=18"

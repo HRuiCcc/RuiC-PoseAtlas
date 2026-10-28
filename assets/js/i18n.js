@@ -84,7 +84,7 @@ export const UI = {
       '<kbd>←</kbd><kbd>→</kbd> 切换角度　<kbd>↑</kbd><kbd>↓</kbd> 切换姿势　<kbd>Esc</kbd> 关闭',
     footerLead: 'RuiC · 姿势图鉴 POSE ATLAS',
     footerCredits:
-      '图片来源：<a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a>（作者 <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>），中文数据镜像：<a href="https://github.com/anhao/ai-pose-gallery-zh" target="_blank" rel="noopener noreferrer">ai-pose-gallery-zh</a>。',
+      '图片来源：<a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a>（作者 <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>）。',
     footerLicense:
       '本页为个人学习性质的前端重写实现，图片版权归原作者所有；请勿转售或再分发图片数据本身。',
     footerMeta: '{poses} 组姿势 · {images} 张图像 · 界面语言参考 POSE-DB-01',
@@ -165,7 +165,7 @@ export const UI = {
       '<kbd>←</kbd><kbd>→</kbd> angle　<kbd>↑</kbd><kbd>↓</kbd> pose　<kbd>Esc</kbd> close',
     footerLead: 'RuiC · POSE ATLAS',
     footerCredits:
-      'Images: <a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a> by <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>. Chinese data mirror: <a href="https://github.com/anhao/ai-pose-gallery-zh" target="_blank" rel="noopener noreferrer">ai-pose-gallery-zh</a>.',
+      'Images: <a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a> by <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>.',
     footerLicense:
       'An unofficial front-end rewrite for personal study. Image rights remain with the original author. Do not resell or redistribute the image data itself.',
     footerMeta: '{poses} poses · {images} images · Interface inspired by POSE-DB-01',
@@ -246,7 +246,7 @@ export const UI = {
       '<kbd>←</kbd><kbd>→</kbd> アングル　<kbd>↑</kbd><kbd>↓</kbd> ポーズ　<kbd>Esc</kbd> 閉じる',
     footerLead: 'RuiC · ポーズ図鑑 POSE ATLAS',
     footerCredits:
-      '画像出典：<a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a>（作者 <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>）、中国語データミラー：<a href="https://github.com/anhao/ai-pose-gallery-zh" target="_blank" rel="noopener noreferrer">ai-pose-gallery-zh</a>。',
+      '画像出典：<a href="https://ai-pose-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">POSE-DB-01</a>（作者 <a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">ギア</a>）。',
     footerLicense:
       '個人学習用の非公式フロントエンドです。画像の権利は原作者に帰属します。画像データ自体の転売・再配布は禁止です。',
     footerMeta: '{poses} ポーズ · {images} 画像 · インターフェースは POSE-DB-01 を参考',

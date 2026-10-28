@@ -226,7 +226,7 @@ const payload = {
   schema: 3,
   generatedAt: new Date().toISOString().slice(0, 10),
   source:
-    'POSE-DB-01 by giaaibusi; Chinese mirror by anhao/ai-pose-gallery-zh; English names maintained by RuiC-PoseAtlas',
+    'POSE-DB-01 by giaaibusi; English names maintained by RuiC-PoseAtlas',
   languages: ['zh', 'en', 'ja'],
   totals: {
     poses: list.length,

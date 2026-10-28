@@ -20,7 +20,6 @@
 ![languages](https://img.shields.io/badge/languages-%E4%B8%AD%E6%96%87%20%7C%20EN%20%7C%20%E6%97%A5%E6%9C%AC%E8%AA%9E-e3c8ff?style=flat-square)
 ![dependencies](https://img.shields.io/badge/dependencies-0-2ea44f?style=flat-square)
 ![license](https://img.shields.io/badge/license-MIT%20%28code%29-blue?style=flat-square)
-![mirror](https://github.com/HRuiCcc/RuiC-PoseAtlas/actions/workflows/mirror-images.yml/badge.svg)
 
 [在线体验](#在线体验) ·
 [项目简介](#项目简介) ·
@@ -260,12 +259,12 @@ RuiC-PoseAtlas/
 ├── thumbs/                     # 1,439 张 300 × 400 JPEG 缩略图
 ├── scripts/
 │   ├── import-data.mjs         # 合并中日数据并写入英文表
-│   ├── fetch-images.mjs        # 从公开数据源镜像图片（可重复运行）
+│   ├── fetch-images.mjs        # 从本仓库下载/恢复图片资产（可重复运行）
 │   ├── verify.mjs              # 离线完整性校验
 │   ├── en-pose-names.json      # 288 条英文名称
 │   └── source/                 # 原始中日数据记录（构建输入）
 ├── .github/workflows/
-│   ├── mirror-images.yml       # 云端镜像并提交图片
+│   ├── fetch-images.yml        # 云端下载并提交图片资产
 │   └── deploy-pages.yml        # 自动部署 GitHub Pages
 ├── docs/                       # README 预览图与赞赏码
 ├── og-cover.jpg                # 社交分享封面
@@ -326,12 +325,12 @@ npm run verify    # 校验数量、翻译、图片尺寸、文件引用与页面
 
 请确保你拥有所提交图片的使用与分发授权。
 
-### 图片镜像流程
+### 图片下载与恢复
 
-仓库内的 2,878 张图片（1,439 PNG + 1,439 JPEG）体积较大。首次发布时，图片由 GitHub Actions 工作流 **Mirror reference images** 在云端从公开数据源镜像并提交；也可以在本地运行：
+仓库内的 2,878 张图片（1,439 PNG + 1,439 JPEG）体积较大，已完整随仓库提供。若在全新克隆中需要恢复缺失文件，可运行 GitHub Actions 工作流 **Fetch image assets**，或在本地运行：
 
 ```bash
-npm run mirror
+npm run fetch-images
 ```
 
 该脚本会：
@@ -422,7 +421,7 @@ npm run mirror
 
 ### 为什么仓库这么大？
 
-图片是完整镜像：1,439 张 900 × 1200 PNG 共约 654 MB，另有 25 MB 缩略图。网页网格不会加载原图，只会在打开大图或下载时请求。克隆仓库需要一次性下载全部图片。
+图片已完整随仓库提供：1,439 张 900 × 1200 PNG 共约 654 MB，另有 25 MB 缩略图。网页网格不会加载原图，只会在打开大图或下载时请求。克隆仓库需要一次性下载全部图片。
 
 ### 为什么打开 `index.html` 是空白？
 
@@ -463,20 +462,19 @@ npm run mirror
 
 - **原作 / 原始站点**：[POSE-DB-01](https://ai-pose-gallery.pages.dev/)
 - **原作者**：[ギア (@giaaibusi)](https://x.com/giaaibusi)
-- **中文数据镜像**：[anhao/ai-pose-gallery-zh](https://github.com/anhao/ai-pose-gallery-zh)
 
-图片、原始日文名称与分类数据来自上述公开项目；本项目仅做数据整理、英文名称补全与前端重写。
+图片、原始日文名称与分类数据来自原作者公开的项目；本项目仅做数据整理、英文名称补全与前端重写。
 
 ### 前端
 
-本项目的 HTML / CSS / JavaScript / i18n / 校验脚本均为从零编写，未复用镜像站点的前端代码。数据 schema、筛选逻辑、灯箱交互、三语字典和视觉样式均为本项目自有实现。
+本项目的 HTML / CSS / JavaScript / i18n / 校验脚本均为从零编写，未复用原作的前端代码。数据 schema、筛选逻辑、灯箱交互、三语字典和视觉样式均为本项目自有实现。
 
 ### 免责声明
 
 - 本项目为非官方整理，与原作者无隶属关系。
 - 画面为无面部特征的人台线稿，并非真实人物。
 - 请勿将本项目用于违法、侵权或违反公序良俗的用途。
-- 如图片版权方认为本仓库的镜像方式不妥，请通过 Issue 联系，会第一时间处理。
+- 如图片版权方认为本仓库的收录方式不妥，请通过 Issue 联系，会第一时间处理。
 
 ---
 
