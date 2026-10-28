@@ -8,6 +8,13 @@
 
 中文 · English · 日本語
 
+<p>
+  <a href="https://hruiccc.github.io/RuiC-PoseAtlas/"><strong>在线体验 →</strong></a> ·
+  <a href="https://github.com/HRuiCcc/RuiC-PoseAtlas">GitHub 仓库</a> ·
+  <a href="https://github.com/HRuiCcc/RuiC-PoseAtlas/issues">问题反馈</a>
+</p>
+
+[![demo](https://img.shields.io/badge/demo-online-2ea44f?style=flat-square)](https://hruiccc.github.io/RuiC-PoseAtlas/)
 ![poses](https://img.shields.io/badge/poses-288-8fb4ff?style=flat-square)
 ![images](https://img.shields.io/badge/images-1%2C439-c3d5ff?style=flat-square)
 ![languages](https://img.shields.io/badge/languages-%E4%B8%AD%E6%96%87%20%7C%20EN%20%7C%20%E6%97%A5%E6%9C%AC%E8%AA%9E-e3c8ff?style=flat-square)
@@ -15,6 +22,7 @@
 ![license](https://img.shields.io/badge/license-MIT%20%28code%29-blue?style=flat-square)
 ![mirror](https://github.com/HRuiCcc/RuiC-PoseAtlas/actions/workflows/mirror-images.yml/badge.svg)
 
+[在线体验](#在线体验) ·
 [项目简介](#项目简介) ·
 [界面预览](#界面预览) ·
 [数据概览](#数据概览) ·
@@ -36,7 +44,13 @@
 
 很多参考图库的问题是：图片分散、视角不统一、难以把同一姿态的不同角度放在一起比较。这个项目以「姿态」为单位组织数据，把同一组的五个视角收进一张卡片；打开大图后可以用方向键连续切换，保持体态、比例和镜头关系的一致性。
 
-同时，它也是一个可以独立部署的前端作品：**纯 HTML + CSS + ES Modules**，没有框架、没有打包器、没有运行时依赖。克隆下来用一个静态服务器打开即可；需要部署时，直接交给 Cloudflare Pages、Netlify、Vercel 或任意静态托管即可。
+同时，它也是一个可以独立部署的前端作品：**纯 HTML + CSS + ES Modules**，没有框架、没有打包器、没有运行时依赖。克隆下来用一个静态服务器打开即可；需要部署时，直接交给 GitHub Pages、Cloudflare Pages、Netlify 或任意静态托管即可。
+
+## 在线体验
+
+> **https://hruiccc.github.io/RuiC-PoseAtlas/**
+
+由 GitHub Pages 自动部署，直接打开即可浏览；支持 `?lang=zh|en|ja` 与姿态深链接。页面中的图片、缩略图、数据与本地版本一致。
 
 ### 这个项目适合谁
 
@@ -251,7 +265,8 @@ RuiC-PoseAtlas/
 │   ├── en-pose-names.json      # 288 条英文名称
 │   └── source/                 # 原始中日数据记录（构建输入）
 ├── .github/workflows/
-│   └── mirror-images.yml       # 云端镜像并提交图片
+│   ├── mirror-images.yml       # 云端镜像并提交图片
+│   └── deploy-pages.yml        # 自动部署 GitHub Pages
 ├── docs/                       # README 预览图与赞赏码
 ├── og-cover.jpg                # 社交分享封面
 ├── _headers                    # Cloudflare Pages 缓存策略
@@ -332,7 +347,17 @@ npm run mirror
 
 ## 部署
 
-### Cloudflare Pages
+### GitHub Pages（当前在线演示）
+
+仓库已内置 `.github/workflows/deploy-pages.yml`：
+
+- push 到 `main` 且涉及站点文件时自动部署；
+- 也可以在 Actions 页面手动运行 `Deploy to GitHub Pages`；
+- 部署时只打包运行所需的 `index.html`、`assets/`、`data/`、`img/`、`thumbs/`、`og-cover.jpg`、`robots.txt`，不会公开 README、`scripts/`、`docs/` 中的赞赏码等仓库文件。
+
+当前地址：**https://hruiccc.github.io/RuiC-PoseAtlas/**
+
+### Cloudflare Pages（备选）
 
 1. 连接本仓库；
 2. Framework preset 选择 **None**；
@@ -353,8 +378,9 @@ npm run mirror
 本项目没有构建步骤，以下方式都可以：
 
 - Netlify / Vercel：输出目录设为仓库根目录；
-- GitHub Pages：从 `main` 分支根目录发布；
 - 任意对象存储 / Nginx：把整个目录作为静态站点根目录。
+
+> 如果使用 GitHub Pages 的「Deploy from a branch」模式，请把发布目录限制为站点文件，避免把 README、`scripts/`、`docs/` 暴露为静态资源；本仓库默认使用 Actions 打包模式。
 
 如果使用自定义域名，建议同步修改 `index.html` 中的 `og:image` 为绝对 URL，便于社交平台抓取封面。
 
@@ -420,6 +446,10 @@ npm run mirror
 ### 为什么不用 React / Vue？
 
 这个项目的交互复杂度并不需要框架：数据量固定、视图是单一列表与灯箱、没有服务端状态。纯原生实现让部署更简单，也更容易长期维护。
+
+### 在线演示在哪里？
+
+**https://hruiccc.github.io/RuiC-PoseAtlas/**。由 GitHub Pages 部署，涉及站点文件的 push 会自动更新。
 
 ### 支持手机吗？
 
