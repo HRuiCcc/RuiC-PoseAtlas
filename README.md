@@ -35,6 +35,8 @@
 
 > **内容提示**：本项目面向成年创作者，部分内容不适合未成年人。请遵守所在地法律法规与平台规范，未成年人请勿使用。
 
+> **原作者项目**：[POSE-DB-01](https://ai-pose-gallery.pages.dev/) · **作者**：[ギア (@giaaibusi)](https://x.com/giaaibusi)
+
 ---
 
 ## 项目简介
