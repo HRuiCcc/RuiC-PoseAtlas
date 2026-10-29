@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'costume.html'
       - 'assets/**'
       - 'data/**'
       - 'img/**'
       - 'thumbs/**'
+      - 'costume/**'
       - 'og-cover.jpg'
       - 'robots.txt'
       - '.nojekyll'
@@ -36,8 +38,8 @@ jobs:
       - name: Stage only site files
         run: |
           mkdir -p _site
-          cp index.html og-cover.jpg robots.txt .nojekyll _site/
-          cp -R assets data img thumbs _site/
+          cp index.html costume.html og-cover.jpg robots.txt .nojekyll _site/
+          cp -R assets data img thumbs costume _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
