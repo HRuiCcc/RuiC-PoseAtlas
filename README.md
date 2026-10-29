@@ -25,6 +25,7 @@
 ![license](https://img.shields.io/badge/license-MIT%20%28code%29-blue?style=flat-square)
 
 [界面预览](#界面预览) ·
+[赞赏支持](#赞赏支持) ·
 [在线体验](#在线体验) ·
 [两个图鉴](#两个图鉴) ·
 [项目亮点](#项目亮点) ·
@@ -32,8 +33,7 @@
 [快速开始](#快速开始) ·
 [数据构建](#数据构建) ·
 [部署](#部署) ·
-[致谢与版权](#致谢与版权) ·
-[赞赏支持](#赞赏支持)
+[致谢与版权](#致谢与版权)
 
 </div>
 
@@ -82,6 +82,20 @@
   <img src="docs/preview-costume-modal.jpg" alt="衣装大图与单品标签" width="72%">
   <img src="docs/preview-costume-mobile.jpg" alt="衣装移动端大图" width="24%">
 </p>
+
+---
+
+## 赞赏支持
+
+如果这个项目对你有帮助，欢迎微信扫码赞赏，支持后续的整理与维护。
+
+<p align="center">
+  <img src="docs/wechat-donate.png" width="280" alt="微信赞赏码">
+</p>
+
+<p align="center"><sub>微信扫码赞赏 · 感谢支持</sub></p>
+
+如果暂时不方便赞赏，点一个 **Star ⭐** 或把项目分享给需要姿态 / 衣装参考的朋友，也是很大的支持。
 
 ---
 
@@ -611,20 +625,6 @@ npm run fetch-images
 - 姿势画面为无面部特征的人台线稿，衣装画面为无人体服装图，均非真实人物或商品。
 - 请勿将本项目用于违法、侵权或违反公序良俗的用途。
 - 如图片版权方认为本仓库的收录方式不妥，请通过 Issue 联系，会第一时间处理。
-
----
-
-## 赞赏支持
-
-如果这个项目对你有帮助，欢迎微信扫码赞赏，支持后续的整理与维护。
-
-<p align="center">
-  <img src="docs/wechat-donate.png" width="280" alt="微信赞赏码">
-</p>
-
-<p align="center"><sub>微信扫码赞赏 · 感谢支持</sub></p>
-
-如果暂时不方便赞赏，点一个 **Star ⭐** 或把项目分享给需要姿态 / 衣装参考的朋友，也是很大的支持。
 
 ---
 
