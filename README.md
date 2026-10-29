@@ -24,9 +24,9 @@
 ![dependencies](https://img.shields.io/badge/dependencies-0-2ea44f?style=flat-square)
 ![license](https://img.shields.io/badge/license-MIT%20%28code%29-blue?style=flat-square)
 
+[界面预览](#界面预览) ·
 [在线体验](#在线体验) ·
 [两个图鉴](#两个图鉴) ·
-[界面预览](#界面预览) ·
 [项目亮点](#项目亮点) ·
 [数据概览](#数据概览) ·
 [快速开始](#快速开始) ·
@@ -59,6 +59,32 @@
 
 同时，它也是一个可以独立部署的前端作品：**纯 HTML + CSS + ES Modules**，没有框架、没有打包器、没有运行时依赖。克隆下来用一个静态服务器打开即可；需要部署时，直接交给 GitHub Pages、Cloudflare Pages、Netlify 或任意静态托管即可。
 
+## 界面预览
+
+### 姿势图鉴
+
+<p align="center">
+  <img src="docs/preview-gallery.jpg" alt="姿势图鉴网格" width="100%">
+</p>
+
+<p align="center">
+  <img src="docs/preview-modal.jpg" alt="姿势大图与多角度切换" width="72%">
+  <img src="docs/preview-mobile.jpg" alt="姿势移动端大图" width="24%">
+</p>
+
+### 衣装图鉴
+
+<p align="center">
+  <img src="docs/preview-costume-gallery.jpg" alt="衣装图鉴网格" width="100%">
+</p>
+
+<p align="center">
+  <img src="docs/preview-costume-modal.jpg" alt="衣装大图与单品标签" width="72%">
+  <img src="docs/preview-costume-mobile.jpg" alt="衣装移动端大图" width="24%">
+</p>
+
+---
+
 ## 在线体验
 
 > **姿势图鉴：https://hruiccc.github.io/RuiC-PoseAtlas/**
@@ -84,39 +110,12 @@
 | 入口 | `index.html` | `costume.html` |
 | 数据源 | `data/poses.json` | `data/costumes.json` |
 | 条目 | 288 组姿态 | 1,407 套穿搭 |
-| 图片 | 1,439 张（每组 4–5 个视角） | 1,407 张（每套一张，含缩略图） |
 | 画面 | 去脸灰色人台线稿，3:4 | 无人体整身服装，2:3 |
 | 主筛选 | 系列 → 分类 → 视角 | 季节 → 品类 → 色系 |
 | 检索维度 | 姿态名 / 编号 / 分类 / 视角 | 编号 / 英文关键词 / 中英日标签 |
 | 大图页 | 五视角切换 + 上一组 / 下一组 | 单品标签清单 + 上一套 / 下一套 |
 
 两页共享同一套设计 token（`assets/css/app.css`）、同一个语言开关（`localStorage` 键 `ruic-poseatlas-lang`）和同一个图集切换器（`assets/css/collection.css`），视觉与手感一致。
-
----
-
-## 界面预览
-
-### 姿势图鉴
-
-<p align="center">
-  <img src="docs/preview-gallery.jpg" alt="姿势图鉴网格" width="100%">
-</p>
-
-<p align="center">
-  <img src="docs/preview-modal.jpg" alt="姿势大图与多角度切换" width="72%">
-  <img src="docs/preview-mobile.jpg" alt="姿势移动端大图" width="24%">
-</p>
-
-### 衣装图鉴
-
-<p align="center">
-  <img src="docs/preview-costume-gallery.jpg" alt="衣装图鉴网格" width="100%">
-</p>
-
-<p align="center">
-  <img src="docs/preview-costume-modal.jpg" alt="衣装大图与单品标签" width="72%">
-  <img src="docs/preview-costume-mobile.jpg" alt="衣装移动端大图" width="24%">
-</p>
 
 ---
 
