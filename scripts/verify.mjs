@@ -111,10 +111,23 @@ for (const match of html.matchAll(i18nPattern)) {
 }
 
 /* Images ------------------------------------------------------------------ */
-const thumbFiles = (await readdir(path.join(root, 'thumbs'))).filter((file) => file.endsWith('.jpg'));
-const imageFiles = (await readdir(path.join(root, 'img'))).filter((file) => file.endsWith('.png'));
-if (thumbFiles.length !== 1439) fail(`thumbs/: expected 1439 files, got ${thumbFiles.length}`);
-if (imageFiles.length !== 1439) fail(`img/: expected 1439 files, got ${imageFiles.length}`);
+/* 部分克隆（git sparse-checkout 只取代码）里没有 img/ 与 thumbs/，
+   设 SKIP_POSE_IMAGES=1 可跳过姿态图的文件与尺寸检查。 */
+const skipPoseImages = process.env.SKIP_POSE_IMAGES === '1';
+
+const listDir = async (rel, ext) => {
+  try {
+    return (await readdir(path.join(root, rel))).filter((file) => file.endsWith(ext));
+  } catch {
+    warn.push(`Missing folder: ${rel}`);
+    return [];
+  }
+};
+
+const thumbFiles = await listDir('thumbs', '.jpg');
+const imageFiles = await listDir('img', '.png');
+if (!skipPoseImages && thumbFiles.length !== 1439) fail(`thumbs/: expected 1439 files, got ${thumbFiles.length}`);
+if (!skipPoseImages && imageFiles.length !== 1439) fail(`img/: expected 1439 files, got ${imageFiles.length}`);
 
 const pngSize = async (rel) => {
   const handle = await open(path.join(root, rel), 'r');
@@ -140,7 +153,7 @@ const jpegSize = (buffer) => {
   return null;
 };
 
-for (let i = 0; i < data.poses.length; i += 1) {
+for (let i = 0; !skipPoseImages && i < data.poses.length; i += 1) {
   const pose = data.poses[i];
   for (const variant of pose.variants) {
     const fullStat = await stat(path.join(root, variant.full));
@@ -160,14 +173,133 @@ for (let i = 0; i < data.poses.length; i += 1) {
 }
 
 /* Repo & page wiring ------------------------------------------------------ */
-for (const file of ['index.html', 'assets/css/app.css', 'assets/js/app.js', 'assets/js/i18n.js',
-  'data/poses.json', 'og-cover.jpg', 'assets/favicon.svg', '_headers', 'robots.txt',
+for (const file of ['index.html', 'costume.html', 'assets/css/app.css', 'assets/css/costume.css',
+  'assets/css/collection.css', 'assets/js/app.js', 'assets/js/costume.js', 'assets/js/i18n.js',
+  'assets/js/costume-i18n.js', 'assets/js/costume-tags.js', 'data/poses.json', 'data/costumes.json',
+  'og-cover.jpg', 'assets/favicon.svg', '_headers', 'robots.txt',
   'LICENSE', 'README.md']) {
   if (!(await exists(file))) fail(`Missing file: ${file}`);
 }
-for (const preview of ['docs/preview-gallery.jpg', 'docs/preview-modal.jpg', 'docs/preview-mobile.jpg']) {
+for (const preview of ['docs/preview-gallery.jpg', 'docs/preview-modal.jpg', 'docs/preview-mobile.jpg',
+  'docs/preview-costume-gallery.jpg', 'docs/preview-costume-modal.jpg', 'docs/preview-costume-mobile.jpg']) {
   if (!(await exists(preview))) warn.push(`Preview not generated yet: ${preview}`);
 }
+
+/* Costume atlas ----------------------------------------------------------- */
+const costumes = JSON.parse(await read('data/costumes.json'));
+const costumeUI = (await import(pathToFileURL(path.join(root, 'assets/js/costume-i18n.js')).href)).UI;
+const tags = await import(pathToFileURL(path.join(root, 'assets/js/costume-tags.js')).href);
+const costumeHtml = await readFile(path.join(root, 'costume.html'), 'utf8');
+
+if (costumes.schema !== 1) fail(`Unexpected costume schema: ${costumes.schema}`);
+if (costumes.totals.costumes !== 1407) fail(`Expected 1407 costumes, got ${costumes.totals.costumes}`);
+if (costumes.costumes.length !== costumes.totals.costumes) fail('costume list length != totals');
+if (costumes.categories.length !== 8) fail(`Expected 8 costume categories, got ${costumes.categories.length}`);
+
+const costumeIds = new Set();
+const costumeCats = new Set(costumes.categories.map((category) => category.key));
+const costumeGroups = new Set(costumes.groups.map((group) => group.key));
+const costumeColors = new Set(costumes.colors.map((color) => color.key));
+const categoryTally = new Map();
+
+for (const item of costumes.costumes) {
+  if (costumeIds.has(item.id)) fail(`Duplicate costume id: ${item.id}`);
+  costumeIds.add(item.id);
+  if (!/^[A-Z]{3}-\d{4}$/.test(item.id)) fail(`Unexpected costume id format: ${item.id}`);
+  if (!costumeCats.has(item.cat)) fail(`${item.id}: unknown category ${item.cat}`);
+  if (!costumeGroups.has(item.group)) fail(`${item.id}: unknown group ${item.group}`);
+  if (item.color && !costumeColors.has(item.color)) fail(`${item.id}: unknown colour ${item.color}`);
+  if (!item.tags.length) fail(`${item.id}: no tags`);
+  for (const tag of item.tags) if (!(tag in tags.TAG_NAMES)) fail(`${item.id}: untranslated tag "${tag}"`);
+  if (!item.tags.includes(item.main)) fail(`${item.id}: main tag not in tag list`);
+  for (const [key, prefix] of [['thumb', 'costume/thumbs/'], ['image', 'costume/img/']]) {
+    if (!item[key].startsWith(prefix)) fail(`${item.id}: ${key} outside ${prefix}`);
+    if (!(await exists(item[key]))) fail(`${item.id}: missing file ${item[key]}`);
+  }
+  categoryTally.set(item.cat, (categoryTally.get(item.cat) ?? 0) + 1);
+}
+
+for (const category of costumes.categories) {
+  for (const lang of LANGS) if (!category.names?.[lang]?.trim()) fail(`Costume category ${category.key} missing ${lang}`);
+  if (category.count !== categoryTally.get(category.key)) {
+    fail(`Costume category ${category.key}: count ${category.count} != ${categoryTally.get(category.key)}`);
+  }
+}
+for (const group of costumes.groups) {
+  for (const lang of LANGS) if (!group.names?.[lang]?.trim()) fail(`Costume group ${group.key} missing ${lang}`);
+}
+for (const [tag, names] of Object.entries(tags.TAG_NAMES)) {
+  for (const lang of LANGS) if (!names[lang]?.trim()) fail(`Tag ${tag} missing ${lang} label`);
+}
+
+const costumeBaseKeys = Object.keys(costumeUI.zh).sort();
+for (const lang of LANGS) {
+  const keys = Object.keys(costumeUI[lang] ?? {}).sort();
+  if (keys.length !== costumeBaseKeys.length) {
+    fail(`costume UI.${lang} has ${keys.length} keys, zh has ${costumeBaseKeys.length}`);
+  }
+  for (const key of costumeBaseKeys) {
+    if (!(key in costumeUI[lang])) fail(`costume UI.${lang} missing key: ${key}`);
+    const zhValue = costumeUI.zh[key];
+    const value = costumeUI[lang][key];
+    if (Array.isArray(zhValue) !== Array.isArray(value)) fail(`costume UI.${lang}.${key} type mismatch`);
+    if (Array.isArray(zhValue) && value.length !== zhValue.length) {
+      fail(`costume UI.${lang}.${key} list length mismatch`);
+    }
+  }
+}
+
+for (const match of costumeHtml.matchAll(i18nPattern)) {
+  const key = match[1];
+  if (!(key in costumeUI.zh)) fail(`costume.html references missing i18n key: ${key}`);
+}
+
+const costumeThumbs = (await readdir(path.join(root, 'costume/thumbs'))).filter((f) => f.endsWith('.webp'));
+const costumeImages = (await readdir(path.join(root, 'costume/img'))).filter((f) => f.endsWith('.webp'));
+if (costumeThumbs.length !== 1407) fail(`costume/thumbs: expected 1407 files, got ${costumeThumbs.length}`);
+if (costumeImages.length !== 1407) fail(`costume/img: expected 1407 files, got ${costumeImages.length}`);
+
+const webpSize = async (rel) => {
+  const buffer = Buffer.alloc(32);
+  const handle = await open(path.join(root, rel), 'r');
+  await handle.read(buffer, 0, 32, 0);
+  await handle.close();
+  if (buffer.toString('ascii', 0, 4) !== 'RIFF' || buffer.toString('ascii', 8, 12) !== 'WEBP') return null;
+  const chunk = buffer.toString('ascii', 12, 16);
+  if (chunk === 'VP8X') {
+    return {
+      width: 1 + buffer.readUIntLE(24, 3),
+      height: 1 + buffer.readUIntLE(27, 3),
+    };
+  }
+  if (chunk === 'VP8 ') {
+    return {
+      width: buffer.readUInt16LE(26) & 0x3fff,
+      height: buffer.readUInt16LE(28) & 0x3fff,
+    };
+  }
+  return { format: chunk };
+};
+
+/* 原作绝大多数是 1366×2048，另有 33 张作者重出过的小一号版本（1254–1360 宽）。
+   统一按 2:3 竖版校验，不锁死像素。 */
+for (let i = 0; i < costumes.costumes.length; i += 1) {
+  const item = costumes.costumes[i];
+  const full = await webpSize(item.image);
+  const ratio = full ? full.width / full.height : 0;
+  if (!full || ratio < 0.64 || ratio > 0.69 || full.height < 1500) {
+    fail(`${item.image}: expected a 2:3 portrait WEBP, got ${JSON.stringify(full)}`);
+  }
+}
+
+for (let i = 0; i < costumes.costumes.length; i += 60) {
+  const item = costumes.costumes[i];
+  const thumb = await webpSize(item.thumb);
+  if (!thumb || thumb.width !== 360 || thumb.height !== 540) {
+    fail(`${item.thumb}: expected 360x540 WEBP, got ${JSON.stringify(thumb)}`);
+  }
+}
+
 if (/support-qr|class="support"/.test(html)) fail('Payment QR/support section must not appear in the site UI');
 if (html.includes('creditLead')) fail('Removed hero credit card still referenced in HTML');
 
@@ -189,5 +321,7 @@ if (errors.length) {
 console.log(
   `OK · ${data.totals.poses} poses · ${data.totals.images} images · ` +
   `${data.categories.length} categories · ${LANGS.length} languages · ` +
-  `${thumbFiles.length} thumbs + ${imageFiles.length} originals verified`
+  `${costumes.totals.costumes} outfits · ${costumes.categories.length} costume categories · ` +
+  `${thumbFiles.length} thumbs + ${imageFiles.length} originals · ` +
+  `${costumeThumbs.length} + ${costumeImages.length} costume images verified`
 );

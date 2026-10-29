@@ -1,0 +1,114 @@
+/* ==========================================================================
+   COSTUME ATLAS — page-specific additions on top of app.css
+   ========================================================================== */
+
+/* Card: source images are 2:3, so the media box follows the artwork -------- */
+
+.grid--costume {
+  grid-template-columns: repeat(auto-fill, minmax(198px, 1fr));
+}
+
+.card--costume .card__media {
+  aspect-ratio: 2 / 3;
+}
+
+.card--costume .card__cover {
+  object-fit: cover;
+  background: var(--panel-hi);
+}
+
+.card__tags {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: 11.5px;
+  line-height: 1.5;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card__tags i {
+  font-style: normal;
+  opacity: 0.4;
+}
+
+/* Lightbox: tag cloud replaces the angle strip ---------------------------- */
+
+/* Source images are 2:3, so the stage follows the artwork instead of the
+   panel height — avoids paper-coloured bars on both sides of the photo. */
+.viewer__stage {
+  flex: 0 1 auto;
+  width: min(100%, calc(min(80vh, 900px) * 2 / 3));
+  margin: 0 auto;
+}
+
+.panel__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.panel__tags span {
+  padding: 5px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: 99px;
+  background: var(--panel);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.panel__tags span:first-child {
+  border-color: rgba(195, 213, 255, 0.4);
+  background: rgba(143, 180, 255, 0.12);
+  color: var(--text);
+}
+
+/* Chunked rendering sentinel ---------------------------------------------- */
+
+.more {
+  display: flex;
+  justify-content: center;
+  padding: 34px 0 6px;
+}
+
+.more[hidden] {
+  display: none;
+}
+
+/* Responsive -------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .grid--costume {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  /* Grid columns default to min-content, which lets the tag row push the
+     whole lightbox wider than the viewport on phones. */
+  .modal__box {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel {
+    min-width: 0;
+  }
+
+  .viewer__stage {
+    width: min(100%, calc(54vh * 2 / 3));
+  }
+}
+
+@media (max-width: 560px) {
+  .grid--costume {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card__tags {
+    display: none;
+  }
+}

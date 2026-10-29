@@ -14,6 +14,9 @@ export const UI = {
     metaDescription:
       '去脸灰色人台姿势参考图库：288 组姿势、1439 张图像，支持正面、斜侧、侧面、俯视、仰视多角度对照，适用于 AI 绘画、3D 与摄影构图参考。',
     brandName: '姿势图鉴',
+    collectionPose: '姿势图鉴',
+    collectionCostume: '衣装图鉴',
+    ariaCollection: '切换图集',
     eyebrow: 'RuiC ・ POSE ATLAS ・ AI 绘画 / 3D / 摄影姿势参考',
     skip: '跳到图库',
     h1a: '姿势图鉴',
@@ -95,6 +98,9 @@ export const UI = {
     metaDescription:
       'A faceless gray mannequin pose reference library: 288 poses and 1,439 images with front, high-angle, low-angle, side and three-quarter views for AI art, 3D and photography composition.',
     brandName: 'Pose Atlas',
+    collectionPose: 'Pose Atlas',
+    collectionCostume: 'Costume Atlas',
+    ariaCollection: 'Switch atlas',
     eyebrow: 'RuiC · POSE ATLAS · AI ART / 3D / PHOTO POSE REFERENCE',
     skip: 'Skip to gallery',
     h1a: 'Pose Atlas',
@@ -176,6 +182,9 @@ export const UI = {
     metaDescription:
       '顔なしグレーマネキンのポーズ参考図鑑。288ポーズ・1439画像を正面・斜め・横・俯瞰・あおりの5アングルで見比べられます。AI絵画・3D・写真構図の参考に。',
     brandName: 'ポーズ図鑑',
+    collectionPose: 'ポーズ図鑑',
+    collectionCostume: '衣装図鑑',
+    ariaCollection: '図鑑を切り替え',
     eyebrow: 'RuiC ・ POSE ATLAS ・ AI絵画 / 3D / 写真ポーズ参考',
     skip: 'ギャラリーへ移動',
     h1a: 'ポーズ図鑑',

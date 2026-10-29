@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>og-cover</title>
+<!-- 渲染：node cdp-shot.mjs scripts/cover/og-cover.html 1200 630 2 out.png → 缩放到 1200×630 存 og-cover.jpg -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+  body {
+    position: relative;
+    background:
+      radial-gradient(900px 420px at 8% -14%, #1b2433 0, transparent 62%),
+      radial-gradient(760px 380px at 102% -6%, #241b30 0, transparent 58%),
+      #0b0d10;
+    color: #e9ecf1;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", system-ui, sans-serif;
+  }
+
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(760px 460px at 22% 40%, #000 0, transparent 78%);
+    -webkit-mask-image: radial-gradient(760px 460px at 22% 40%, #000 0, transparent 78%);
+  }
+
+  .left {
+    position: absolute;
+    left: 64px;
+    top: 56px;
+    width: 520px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #6c7482;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .26em;
+  }
+
+  .eyebrow i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8fb4ff;
+    box-shadow: 0 0 12px rgba(143,180,255,.9);
+  }
+
+  h1 {
+    margin-top: 34px;
+    font-size: 76px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: .01em;
+  }
+
+  h1 .grad {
+    background: linear-gradient(96deg, #c3d5ff 0%, #cfc0ff 52%, #e3c8ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sub {
+    margin-top: 20px;
+    color: #7f8896;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: .28em;
+  }
+
+  .stats {
+    display: flex;
+    align-items: baseline;
+    gap: 13px;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .03em;
+  }
+
+  .stats b { color: #8fb4ff; font-size: 21px; }
+  .stats span.sep { color: #3a414c; }
+  .stats em { font-style: normal; color: #d5dae3; }
+
+  .pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .pills span {
+    padding: 9px 18px;
+    border: 1px solid #3a414c;
+    border-radius: 99px;
+    color: #cfd4dc;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .pills span:first-child {
+    border-color: #e9ecf1;
+    background: #e9ecf1;
+    color: #111418;
+    font-weight: 700;
+  }
+
+  .foot {
+    position: absolute;
+    left: 64px;
+    bottom: 46px;
+    color: #5c6470;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .22em;
+  }
+
+  /* ---- 五张卡片：上=人体，左右=衣装，下=两张人体 ---- */
+  .stack {
+    position: absolute;
+    right: 16px;
+    top: 40px;
+    width: 620px;
+    height: 570px;
+  }
+
+  .card {
+    position: absolute;
+    padding: 9px 9px 0;
+    border-radius: 9px;
+    background: #fbfbfa;
+    box-shadow: 0 24px 56px rgba(0,0,0,.62), 0 2px 0 rgba(255,255,255,.5) inset;
+  }
+
+  .card img {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    background: #eee;
+  }
+
+  .card.pos img {
+    object-fit: contain;
+    background: #fff;
+  }
+
+  .card figcaption {
+    padding: 8px 2px 11px;
+    color: #6a7280;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .card.c {
+    left: 198px; top: 0;
+    width: 224px;
+    transform: rotate(-2deg);
+    z-index: 5;
+  }
+  .card.c img { height: 268px; }
+
+  .card.l {
+    left: 2px; top: 106px;
+    width: 194px;
+    transform: rotate(-13deg);
+    z-index: 3;
+  }
+  .card.r {
+    left: 402px; top: 94px;
+    width: 194px;
+    transform: rotate(12deg);
+    z-index: 4;
+  }
+  .card.l img, .card.r img { height: 244px; object-fit: cover; object-position: top center; }
+
+  .card.bl {
+    left: 104px; top: 262px;
+    width: 194px;
+    transform: rotate(-7deg);
+    z-index: 1;
+  }
+  .card.br {
+    left: 314px; top: 272px;
+    width: 194px;
+    transform: rotate(6deg);
+    z-index: 2;
+  }
+  .card.bl img, .card.br img { height: 226px; object-fit: contain; background: #fff; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <div class="left">
+    <p class="eyebrow"><i></i>RUIC ・ ATLAS</p>
+    <h1>人体姿态<br><span class="grad">衣装图库</span></h1>
+    <p class="sub">POSE &amp; COSTUME REFERENCE GALLERY</p>
+
+    <div class="stats">
+      <b>288</b><em>POSES</em>
+      <span class="sep">|</span>
+      <b>1,439</b><em>IMAGES</em>
+      <span class="sep">|</span>
+      <b>1,407</b><em>OUTFITS</em>
+    </div>
+
+    <div class="pills"><span>中文</span><span>English</span><span>日本語</span></div>
+  </div>
+
+  <div class="stack">
+    <figure class="card l">
+      <img src="../../costume/img/SXY-0039.webp" alt="">
+      <figcaption>SXY · 0039</figcaption>
+    </figure>
+
+    <figure class="card r">
+      <img src="../../costume/img/SXY-0040.webp" alt="">
+      <figcaption>SXY · 0040</figcaption>
+    </figure>
+
+    <figure class="card bl">
+      <img src="../../img/full_sexy_P003_front.png" alt="">
+      <figcaption>POSE · P003</figcaption>
+    </figure>
+
+    <figure class="card br">
+      <img src="../../img/full_single_P015_front.png" alt="">
+      <figcaption>POSE · P015</figcaption>
+    </figure>
+
+    <figure class="card c">
+      <img src="../../img/full_single_P019_front.png" alt="">
+      <figcaption>POSE · P019</figcaption>
+    </figure>
+  </div>
+
+  <p class="foot">AI ART · 3D · PHOTO COMPOSITION · ZERO DEPENDENCIES</p>
+</body>
+</html>

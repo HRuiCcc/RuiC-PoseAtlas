@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RuiC-CostumeAtlas · 衣装图鉴数据库 | Costume Atlas</title>
+  <meta name="description" id="metaDescription" content="无人物衣装参考图库：1,407 套装扮、8 个分类，按季节、品类与色系筛选，支持中文 / English / 日本語。适用于 AI 绘画、换装与角色设定参考。">
+  <meta name="theme-color" content="#0d0f12">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RuiC-CostumeAtlas · 衣装图鉴">
+  <meta property="og:description" content="1,407 套无人物整身穿搭，8 个分类，可按品类与色系筛选。AI 绘画 / 换装 / 角色设定参考。">
+  <link rel="canonical" href="https://hruiccc.github.io/RuiC-PoseAtlas/costume.html">
+  <meta property="og:url" content="https://hruiccc.github.io/RuiC-PoseAtlas/costume.html">
+  <meta property="og:site_name" content="RuiC-PoseAtlas">
+  <meta property="og:image" content="https://hruiccc.github.io/RuiC-PoseAtlas/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RuiC-CostumeAtlas · 衣装图鉴">
+  <meta name="twitter:description" content="1,407 套无人物穿搭 · 8 个分类 · 中文 / English / 日本語">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/collection.css">
+  <link rel="stylesheet" href="assets/css/costume.css">
+  <script type="module" src="assets/js/costume.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery" data-i18n="skip">跳到图库</a>
+
+  <header class="hero" id="top">
+    <div class="hero__top">
+      <p class="eyebrow" data-i18n="eyebrow">RuiC ・ COSTUME ATLAS ・ AI 绘画 / 换装 / 角色设定参考</p>
+
+      <div class="hero__tools">
+        <div class="lang" id="langSwitch" role="group" aria-label="切换语言" data-i18n-aria="ariaLanguage">
+          <button type="button" data-lang="zh" aria-pressed="true" aria-label="中文">中文</button>
+          <button type="button" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
+          <button type="button" data-lang="ja" aria-pressed="false" aria-label="日本語">日本語</button>
+        </div>
+
+        <nav class="info" id="info" aria-label="使用提示与注意事项" data-i18n-aria="ariaInfo">
+          <div class="info__tabs">
+            <button type="button" class="info__tab" id="infoTabTips" data-panel="panelTips" aria-expanded="false" aria-controls="panelTips" data-i18n="tabTips">使用提示</button>
+            <button type="button" class="info__tab" id="infoTabNotice" data-panel="panelNotice" aria-expanded="false" aria-controls="panelNotice" data-i18n="tabNotice">注意事项</button>
+          </div>
+          <section class="info__panel" id="panelTips" role="dialog" aria-labelledby="panelTipsTitle" tabindex="-1" hidden>
+            <div class="info__head">
+              <h2 id="panelTipsTitle" data-i18n="tipsTitle">使用提示</h2>
+              <button type="button" class="info__close" data-close-panel aria-label="关闭" data-i18n-aria="closeInfo">×</button>
+            </div>
+            <ul data-i18n-list="tips"></ul>
+          </section>
+          <section class="info__panel" id="panelNotice" role="dialog" aria-labelledby="panelNoticeTitle" tabindex="-1" hidden>
+            <div class="info__head">
+              <h2 id="panelNoticeTitle" data-i18n="noticesTitle">注意事项</h2>
+              <button type="button" class="info__close" data-close-panel aria-label="关闭" data-i18n-aria="closeInfo">×</button>
+            </div>
+            <ul data-i18n-list="notices"></ul>
+          </section>
+        </nav>
+      </div>
+    </div>
+
+    <nav class="collection" aria-label="切换图集" data-i18n-aria="ariaCollection">
+      <a class="collection__item" href="./"><span data-i18n="collectionPose">姿势图鉴</span><em>288</em></a>
+      <a class="collection__item" href="costume.html" aria-current="page"><span data-i18n="collectionCostume">衣装图鉴</span><em>1,407</em></a>
+    </nav>
+
+    <h1><span class="hero__mark" data-i18n="h1a">衣装图鉴</span> <span data-i18n="h1b">数据库</span></h1>
+    <p class="hero__sub" data-i18n="heroSub">无人物的整身穿搭参考（2:3）。春、夏、秋、冬、内衣、派对、泳装、性感八个分类，可按品类与色系筛选。</p>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar__inner">
+      <nav class="series" id="categoryTabs" aria-label="衣装分类" data-i18n-aria="ariaCategories"></nav>
+
+      <div class="controls">
+        <label class="search" for="searchInput">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="searchInput" type="search" placeholder="搜索编号 / 关键词 / 标签" autocomplete="off" spellcheck="false" aria-label="搜索编号、关键词或标签" data-i18n-placeholder="searchPlaceholder" data-i18n-aria="ariaSearch">
+        </label>
+
+        <button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filters">
+          <span data-i18n="filter">筛选</span><b id="filterBadge" hidden></b>
+        </button>
+
+        <div class="filters" id="filters">
+          <label class="select" for="groupSelect">
+            <span class="sr-only" data-i18n="metaGroup">品类</span>
+            <select id="groupSelect"></select>
+            <svg class="select__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </label>
+
+          <label class="select" for="colorSelect">
+            <span class="sr-only" data-i18n="metaColor">色系</span>
+            <select id="colorSelect"></select>
+            <svg class="select__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </label>
+        </div>
+
+        <p class="count" id="resultCount" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <main class="main" id="gallery">
+    <div class="grid grid--costume" id="grid" aria-busy="true"></div>
+    <div class="more" id="more" hidden>
+      <button type="button" class="button button--ghost" id="moreButton" data-i18n="more">加载更多</button>
+    </div>
+    <div class="empty" id="empty" hidden>
+      <p class="empty__title" data-i18n="emptyTitle">没有匹配的衣装</p>
+      <p class="empty__text" data-i18n="emptyText">换一个关键词，或清除当前的筛选条件。</p>
+      <button type="button" class="button button--ghost" id="clearFilters" data-i18n="clearFilters">清除筛选</button>
+    </div>
+    <noscript>
+      <p class="empty__title">需要启用 JavaScript 才能浏览图库。</p>
+    </noscript>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__card">
+      <p class="footer__lead" data-i18n="footerLead">RuiC · 衣装图鉴 COSTUME ATLAS</p>
+      <p data-i18n-html="footerCredits">图片来源：COSTUME-DB-01（作者 ギア）。</p>
+      <p data-i18n="footerLicense">本页为个人学习性质的前端重写实现，图片版权归原作者所有；请勿转售或再分发图片数据本身。</p>
+      <p class="footer__meta" id="footerMeta">1,407 套衣装 · 8 个分类</p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-label="大图预览" data-i18n-aria="modalAria" hidden>
+    <div class="modal__scrim" data-close-modal></div>
+    <div class="modal__box">
+      <button type="button" class="modal__close" id="modalClose" aria-label="关闭大图" data-i18n-aria="modalClose">×</button>
+
+      <div class="viewer">
+        <div class="viewer__stage" id="viewerStage">
+          <img class="viewer__ghost" id="viewerGhost" alt="" aria-hidden="true">
+          <img class="viewer__image" id="viewerImage" alt="">
+          <div class="viewer__spinner" id="viewerSpinner" aria-hidden="true"></div>
+          <p class="viewer__error" id="viewerError" data-i18n="imageError" hidden>原图加载失败</p>
+        </div>
+        <button type="button" class="viewer__nav viewer__nav--prev" id="prevItem" aria-label="上一套" data-i18n-aria="prevItem">‹</button>
+        <button type="button" class="viewer__nav viewer__nav--next" id="nextItem" aria-label="下一套" data-i18n-aria="nextItem">›</button>
+      </div>
+
+      <aside class="panel">
+        <div class="panel__head">
+          <h2 id="modalTitle"></h2>
+          <p class="panel__id" id="modalId"></p>
+        </div>
+
+        <div class="panel__tags" id="modalTags"></div>
+
+        <dl class="panel__meta" id="modalMeta"></dl>
+
+        <a class="download" id="downloadLink" href="#" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg>
+          <span data-i18n="download">下载原图（全尺寸）</span>
+        </a>
+
+        <p class="panel__note" data-i18n="downloadNote">全尺寸 1366 × 2048，可直接作为服装参考。</p>
+
+        <p class="panel__keys" data-i18n-html="keysHint"><kbd>←</kbd><kbd>→</kbd> 上一套 / 下一套　<kbd>Esc</kbd> 关闭</p>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
