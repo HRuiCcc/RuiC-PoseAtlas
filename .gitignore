@@ -3,3 +3,7 @@ _source/
 node_modules/
 *.log
 *.part
+
+# Local full-size portrait originals (≈4.5 GB). Thumbnails are committed so
+# the deployed grid is fast; run `npm run fetch-faces` to restore this folder.
+portrait/img/
