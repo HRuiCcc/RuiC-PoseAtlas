@@ -123,7 +123,7 @@
     letter-spacing: .22em;
   }
 
-  /* ---- 五张卡片：上=人体，左右=衣装，下=两张人体 ---- */
+  /* ---- 五张卡片：上=人体，左右=衣装，下=两张人脸 ---- */
   .stack {
     position: absolute;
     right: 16px;
@@ -197,7 +197,7 @@
     transform: rotate(6deg);
     z-index: 2;
   }
-  .card.bl img, .card.br img { height: 226px; object-fit: contain; background: #fff; }
+  .card.bl img, .card.br img { height: 226px; object-fit: cover; object-position: top center; background: #ececec; }
 </style>
 </head>
 <body>
@@ -231,13 +231,13 @@
     </figure>
 
     <figure class="card bl">
-      <img src="../../img/full_sexy_P003_front.png" alt="">
-      <figcaption>POSE · P003</figcaption>
+      <img src="../../portrait/img/f71f980dde3.png" alt="">
+      <figcaption>FACE · 001</figcaption>
     </figure>
 
     <figure class="card br">
-      <img src="../../img/full_single_P015_front.png" alt="">
-      <figcaption>POSE · P015</figcaption>
+      <img src="../../portrait/img/f002475397d.png" alt="">
+      <figcaption>FACE · 002</figcaption>
     </figure>
 
     <figure class="card c">
