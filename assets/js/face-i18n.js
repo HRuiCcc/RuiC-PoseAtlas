@@ -39,7 +39,7 @@ export const UI = {
     notices: [
       '原作以 CC0 1.0 发布，可自由用于商用、编辑与参考，署名不是必需（保留原站链接是礼貌）。',
       '画面是 AI 生成的虚构人物，并不存在；禁止用于冒充真实人物或违反公序良俗的用途。',
-      '原站请求不要转载、再分发图片文件本身。本站以引用方式加载原图，不上传图片文件。',
+      '原站请求不要转载、再分发图片文件本身。本站只随仓库提供浏览用缩略图，全尺寸原图以引用方式从原站加载。',
       '本站是非官方个人重写版本，图片权利按原站 CC0 说明；若有异议请通过原站联系下架。',
     ],
     ariaInfo: '使用提示与注意事项',
@@ -80,7 +80,7 @@ export const UI = {
     footerCredits:
       '图片来源：<a href="https://ai-portrait-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">AIモデル顔データベース</a>（作者 <a href="https://x.com/agi_aibusi" target="_blank" rel="noopener noreferrer">あぎ</a>，CC0 1.0）。',
     footerLicense:
-      '本页为个人学习性质的前端重写实现，图片以引用方式加载、不随本项目再分发；图片权利按原站 CC0 1.0 说明。',
+      '本页为个人学习性质的前端重写实现；缩略图随仓库提供用于浏览，全尺寸原图不随仓库分发、按引用加载；图片权利按原站 CC0 1.0 说明。',
     footerMeta: '{images} 张图像 · 脸部 {face} · 造型 {styling} · {hairs} 种发型',
   },
 
@@ -113,7 +113,7 @@ export const UI = {
     notices: [
       'The original work is released under CC0 1.0: free for commercial use, editing and reference. Credit is optional (linking the original site is courteous).',
       'These are AI-generated fictional people who do not exist. Do not use them to impersonate real people or for purposes against public order and morals.',
-      'The original site asks that the image files themselves not be reposted or redistributed. This site loads them by reference and does not upload the image files.',
+      'The original site asks that the image files themselves not be reposted or redistributed. This site ships only browsing thumbnails and loads full-size originals by reference from the source.',
       'This is an unofficial personal rewrite. Image rights follow the original CC0 1.0 terms; takedown requests can be made through the original site.',
     ],
     ariaInfo: 'Usage tips and notes',
@@ -154,7 +154,7 @@ export const UI = {
     footerCredits:
       'Images: <a href="https://ai-portrait-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">AI Model Face Database</a> by <a href="https://x.com/agi_aibusi" target="_blank" rel="noopener noreferrer">あぎ</a>, CC0 1.0.',
     footerLicense:
-      'An unofficial front-end rewrite for personal study. Images are loaded by reference and are not redistributed with this project; rights follow the original CC0 1.0 terms.',
+      'An unofficial front-end rewrite for personal study. Browsing thumbnails ship with the repo; full-size originals are not redistributed and are loaded by reference from the source. Rights follow the original CC0 1.0 terms.',
     footerMeta: '{images} images · face {face} · styling {styling} · {hairs} hairstyles',
   },
 
@@ -187,7 +187,7 @@ export const UI = {
     notices: [
       '原作はCC0 1.0で公開され、商用利用・編集・参考利用が自由です。クレジット表記は任意です（元サイトへのリンクは歓迎）。',
       'AI生成の架空の人物であり、実在しません。実在人物のなりすましや公序良俗に反する用途は禁止です。',
-      '元サイトは画像ファイルそのものの再配布・転載を控えるようお願いしています。本サイトは参照読み込みのみで、画像ファイルをアップロードしません。',
+      '元サイトは画像ファイルそのものの再配布・転載を控えるようお願いしています。本サイトは閲覧用サムネイルのみ同梱し、原寸画像は元サイトから参照読み込みします。',
       '本サイトは非公式の個人制作による書き直し版です。画像の権利は元サイトのCC0 1.0に従います。削除のご依頼は元サイトまでお願いします。',
     ],
     ariaInfo: '使い方のヒントと注意点',
@@ -228,7 +228,7 @@ export const UI = {
     footerCredits:
       '画像出典：<a href="https://ai-portrait-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">AIモデル顔データベース</a>（作者 <a href="https://x.com/agi_aibusi" target="_blank" rel="noopener noreferrer">あぎ</a>、CC0 1.0）。',
     footerLicense:
-      '個人学習用の非公式フロントエンドです。画像は参照読み込みのみで、本プロジェクトには同梱・再配布されません。権利は元サイトのCC0 1.0に従います。',
+      '個人学習用の非公式フロントエンドです。閲覧用サムネイルのみ同梱し、原寸画像は同梱せず元サイトから参照読み込みします。権利は元サイトのCC0 1.0に従います。',
     footerMeta: '{images} 枚 · フェイス {face} · スタイリング {styling} · 髪型 {hairs} 分類',
   },
 };
