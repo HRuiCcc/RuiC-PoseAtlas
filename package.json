@@ -1,15 +1,17 @@
 {
   "name": "ruic-poseatlas",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
-  "description": "RuiC-PoseAtlas — trilingual pose + costume reference gallery",
+  "description": "RuiC-PoseAtlas — trilingual pose + costume + portrait reference gallery",
   "type": "module",
   "scripts": {
     "start": "python3 -m http.server 8123 --bind 127.0.0.1",
     "data": "node scripts/import-data.mjs",
     "data:costume": "node scripts/import-costumes.mjs",
+    "data:face": "node scripts/import-faces.mjs",
     "verify": "node scripts/verify.mjs",
-    "fetch-images": "node scripts/fetch-images.mjs"
+    "fetch-images": "node scripts/fetch-images.mjs",
+    "fetch-faces": "node scripts/fetch-faces.mjs"
   },
   "engines": {
     "node": ">=18"

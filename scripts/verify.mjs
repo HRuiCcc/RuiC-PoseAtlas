@@ -173,15 +173,17 @@ for (let i = 0; !skipPoseImages && i < data.poses.length; i += 1) {
 }
 
 /* Repo & page wiring ------------------------------------------------------ */
-for (const file of ['index.html', 'costume.html', 'assets/css/app.css', 'assets/css/costume.css',
-  'assets/css/collection.css', 'assets/js/app.js', 'assets/js/costume.js', 'assets/js/i18n.js',
-  'assets/js/costume-i18n.js', 'assets/js/costume-tags.js', 'data/poses.json', 'data/costumes.json',
+for (const file of ['index.html', 'costume.html', 'face.html', 'assets/css/app.css', 'assets/css/costume.css',
+  'assets/css/collection.css', 'assets/css/face.css', 'assets/js/app.js', 'assets/js/costume.js',
+  'assets/js/face.js', 'assets/js/i18n.js', 'assets/js/costume-i18n.js', 'assets/js/face-i18n.js',
+  'assets/js/costume-tags.js', 'data/poses.json', 'data/costumes.json', 'data/faces.json',
   'og-cover.jpg', 'assets/favicon.svg', '_headers', 'robots.txt',
   'LICENSE', 'README.md']) {
   if (!(await exists(file))) fail(`Missing file: ${file}`);
 }
 for (const preview of ['docs/preview-gallery.jpg', 'docs/preview-modal.jpg', 'docs/preview-mobile.jpg',
-  'docs/preview-costume-gallery.jpg', 'docs/preview-costume-modal.jpg', 'docs/preview-costume-mobile.jpg']) {
+  'docs/preview-costume-gallery.jpg', 'docs/preview-costume-modal.jpg', 'docs/preview-costume-mobile.jpg',
+  'docs/preview-face-gallery.jpg', 'docs/preview-face-modal.jpg', 'docs/preview-face-mobile.jpg']) {
   if (!(await exists(preview))) warn.push(`Preview not generated yet: ${preview}`);
 }
 
@@ -307,6 +309,128 @@ if (!html.includes('data-lang="zh"') || !html.includes('data-lang="en"') || !htm
   fail('Language switch is incomplete');
 }
 
+/* Portrait atlas ---------------------------------------------------------- */
+const faces = JSON.parse(await read('data/faces.json'));
+const faceUI = (await import(pathToFileURL(path.join(root, 'assets/js/face-i18n.js')).href)).UI;
+const faceHtml = await readFile(path.join(root, 'face.html'), 'utf8');
+
+if (faces.schema !== 1) fail(`Unexpected portrait schema: ${faces.schema}`);
+if (faces.totals.images !== 1499) fail(`Expected 1499 portraits, got ${faces.totals.images}`);
+if (faces.totals.face !== 893) fail(`Expected 893 face images, got ${faces.totals.face}`);
+if (faces.totals.styling !== 606) fail(`Expected 606 styling images, got ${faces.totals.styling}`);
+if (faces.images.length !== faces.totals.images) fail('portrait list length != totals');
+if (faces.sections.length !== 2) fail(`Expected 2 portrait sections, got ${faces.sections.length}`);
+if (faces.hairs.length !== 4) fail(`Expected 4 hairstyles, got ${faces.hairs.length}`);
+
+const portraitIds = new Set();
+const portraitSections = new Set(faces.sections.map((section) => section.key));
+const portraitHairs = new Set(faces.hairs.map((hair) => hair.key));
+const portraitSectionTally = new Map();
+const portraitHairTally = new Map();
+
+for (const item of faces.images) {
+  if (portraitIds.has(item.id)) fail(`Duplicate portrait id: ${item.id}`);
+  portraitIds.add(item.id);
+  if (!/^[a-z0-9]+$/i.test(item.id)) fail(`Unexpected portrait id: ${item.id}`);
+  if (!portraitSections.has(item.sec)) fail(`${item.id}: unknown section ${item.sec}`);
+  if (!portraitHairs.has(item.hair)) fail(`${item.id}: unknown hairstyle ${item.hair}`);
+  if (typeof item.style !== 'string') fail(`${item.id}: style must be a string`);
+  if (!Number.isInteger(item.w) || !Number.isInteger(item.h) || item.w < 1 || item.h < 1) {
+    fail(`${item.id}: invalid dimensions ${item.w}x${item.h}`);
+  }
+  if (item.thumb !== `portrait/thumbs/${item.id}.webp`) fail(`${item.id}: unexpected thumb path ${item.thumb}`);
+  if (item.full !== `portrait/img/${item.id}.png`) fail(`${item.id}: unexpected full path ${item.full}`);
+  if (item.thumb_remote !== `https://ai-portrait-gallery.pages.dev/img/thumb/${item.id}.webp`) {
+    fail(`${item.id}: unexpected remote thumb ${item.thumb_remote}`);
+  }
+  if (item.full_remote !== `https://ai-portrait-gallery.pages.dev/img/full/${item.id}.png`) {
+    fail(`${item.id}: unexpected remote full ${item.full_remote}`);
+  }
+  if (!Number.isInteger(item.thumb_w) || !Number.isInteger(item.thumb_h)) {
+    fail(`${item.id}: invalid thumbnail dimensions`);
+  }
+  if (!Number.isInteger(item.bytes) || item.bytes < 1024) fail(`${item.id}: invalid byte size`);
+
+  portraitSectionTally.set(item.sec, (portraitSectionTally.get(item.sec) ?? 0) + 1);
+  portraitHairTally.set(item.hair, (portraitHairTally.get(item.hair) ?? 0) + 1);
+}
+
+for (const section of faces.sections) {
+  for (const lang of LANGS) if (!section.names?.[lang]?.trim()) fail(`Portrait section ${section.key} missing ${lang}`);
+  for (const lang of LANGS) if (!section.note?.[lang]?.trim()) fail(`Portrait section ${section.key} missing ${lang} note`);
+  if (section.count !== portraitSectionTally.get(section.key)) {
+    fail(`Portrait section ${section.key}: count ${section.count} != ${portraitSectionTally.get(section.key)}`);
+  }
+}
+for (const hair of faces.hairs) {
+  for (const lang of LANGS) if (!hair.names?.[lang]?.trim()) fail(`Portrait hairstyle ${hair.key} missing ${lang}`);
+  if (hair.count !== portraitHairTally.get(hair.key)) {
+    fail(`Portrait hairstyle ${hair.key}: count ${hair.count} != ${portraitHairTally.get(hair.key)}`);
+  }
+}
+if (!faces.source?.url?.startsWith('https://ai-portrait-gallery.pages.dev/')) {
+  fail('Portrait source URL is missing or unexpected');
+}
+
+const faceBaseKeys = Object.keys(faceUI.zh).sort();
+for (const lang of LANGS) {
+  const keys = Object.keys(faceUI[lang] ?? {}).sort();
+  if (keys.length !== faceBaseKeys.length) {
+    fail(`face UI.${lang} has ${keys.length} keys, zh has ${faceBaseKeys.length}`);
+  }
+  for (const key of faceBaseKeys) {
+    if (!(key in faceUI[lang])) fail(`face UI.${lang} missing key: ${key}`);
+    const zhValue = faceUI.zh[key];
+    const value = faceUI[lang][key];
+    if (Array.isArray(zhValue) !== Array.isArray(value)) fail(`face UI.${lang}.${key} type mismatch`);
+    if (Array.isArray(zhValue) && value.length !== zhValue.length) {
+      fail(`face UI.${lang}.${key} list length mismatch`);
+    }
+  }
+}
+
+for (const match of faceHtml.matchAll(i18nPattern)) {
+  const key = match[1];
+  if (!(key in faceUI.zh)) fail(`face.html references missing i18n key: ${key}`);
+}
+
+/* portrait/thumbs ships with the repo; portrait/img is a local-only download
+   (≈4.5 GB, gitignored). When the full folder is present, check counts and
+   sample dimensions; when absent, the site falls back to the original URL. */
+const listOptional = async (rel, ext) => {
+  try {
+    return (await readdir(path.join(root, rel))).filter((file) => file.endsWith(ext));
+  } catch {
+    return [];
+  }
+};
+
+const portraitThumbs = await listOptional('portrait/thumbs', '.webp');
+const portraitImages = await listOptional('portrait/img', '.png');
+if (portraitThumbs.length !== 1499) {
+  fail(`portrait/thumbs: expected 1499 files, got ${portraitThumbs.length}`);
+}
+if (portraitImages.length && portraitImages.length !== 1499) {
+  fail(`portrait/img: expected 1499 files, got ${portraitImages.length}`);
+}
+
+for (let i = 0; i < faces.images.length; i += 75) {
+  const item = faces.images[i];
+  const thumb = await webpSize(item.thumb);
+  if (!thumb || thumb.width !== item.thumb_w || thumb.height !== item.thumb_h) {
+    fail(`${item.thumb}: expected ${item.thumb_w}x${item.thumb_h} WEBP, got ${JSON.stringify(thumb)}`);
+  }
+  if (portraitImages.length) {
+    const full = await pngSize(item.full);
+    if (!full || full.width !== item.w || full.height !== item.h) {
+      fail(`${item.full}: expected ${item.w}x${item.h} PNG, got ${JSON.stringify(full)}`);
+    }
+  }
+}
+if (!portraitImages.length) {
+  warn.push('portrait/img/ originals not downloaded; run `npm run fetch-faces` for offline full-size copies');
+}
+
 /* Report ------------------------------------------------------------------ */
 if (warn.length) {
   console.log('Warnings:');
@@ -322,6 +446,8 @@ console.log(
   `OK · ${data.totals.poses} poses · ${data.totals.images} images · ` +
   `${data.categories.length} categories · ${LANGS.length} languages · ` +
   `${costumes.totals.costumes} outfits · ${costumes.categories.length} costume categories · ` +
+  `${faces.totals.images} portraits (${faces.totals.face} face + ${faces.totals.styling} styling) · ` +
   `${thumbFiles.length} thumbs + ${imageFiles.length} originals · ` +
-  `${costumeThumbs.length} + ${costumeImages.length} costume images verified`
+  `${costumeThumbs.length} + ${costumeImages.length} costume images · ` +
+  `${portraitThumbs.length} + ${portraitImages.length} local portrait images verified`
 );

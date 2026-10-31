@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Shared: atlas switcher (pose ↔ costume)
+   Shared: atlas switcher (pose ↔ costume ↔ portrait)
    ========================================================================== */
 
 .collection {
@@ -62,7 +62,19 @@
     flex: 1;
     justify-content: center;
     min-height: 40px;
-    padding: 0 10px;
+    padding: 0 8px;
     font-size: 13px;
+  }
+
+  .collection__item em {
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 380px) {
+  .collection__item {
+    gap: 5px;
+    padding: 0 6px;
+    font-size: 12px;
   }
 }

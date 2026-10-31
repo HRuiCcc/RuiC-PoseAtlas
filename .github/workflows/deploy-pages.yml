@@ -6,11 +6,13 @@ on:
     paths:
       - 'index.html'
       - 'costume.html'
+      - 'face.html'
       - 'assets/**'
       - 'data/**'
       - 'img/**'
       - 'thumbs/**'
       - 'costume/**'
+      - 'portrait/**'
       - 'og-cover.jpg'
       - 'robots.txt'
       - '.nojekyll'
@@ -37,9 +39,10 @@ jobs:
 
       - name: Stage only site files
         run: |
-          mkdir -p _site
-          cp index.html costume.html og-cover.jpg robots.txt .nojekyll _site/
+          mkdir -p _site/portrait
+          cp index.html costume.html face.html og-cover.jpg robots.txt .nojekyll _site/
           cp -R assets data img thumbs costume _site/
+          cp -R portrait/thumbs _site/portrait/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

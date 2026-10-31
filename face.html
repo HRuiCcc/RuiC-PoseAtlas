@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RuiC-PortraitAtlas · 人像图鉴数据库 | Portrait Atlas</title>
+  <meta name="description" id="metaDescription" content="AI 生成的虚构人像参考图库：1,499 张图像，含脸部 893 张与造型 606 张，按发型筛选，支持中文 / English / 日本語。适用于固定角色脸、换装与角色设定参考。">
+  <meta name="theme-color" content="#0d0f12">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RuiC-PortraitAtlas · 人像图鉴">
+  <meta property="og:description" content="1,499 张 AI 虚构人像：脸部 893 + 造型 606，可按发型筛选。AI 绘画 / 角色脸 / 造型参考。">
+  <link rel="canonical" href="https://hruiccc.github.io/RuiC-PoseAtlas/face.html">
+  <meta property="og:url" content="https://hruiccc.github.io/RuiC-PoseAtlas/face.html">
+  <meta property="og:site_name" content="RuiC-PoseAtlas">
+  <meta property="og:image" content="https://hruiccc.github.io/RuiC-PoseAtlas/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RuiC-PortraitAtlas · 人像图鉴">
+  <meta name="twitter:description" content="1,499 张 AI 虚构人像 · 脸部 893 + 造型 606 · 4 种发型 · 中文 / English / 日本語">
+  <meta name="twitter:image" content="https://hruiccc.github.io/RuiC-PoseAtlas/og-cover.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/collection.css">
+  <link rel="stylesheet" href="assets/css/face.css">
+  <script type="module" src="assets/js/face.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery" data-i18n="skip">跳到图库</a>
+
+  <header class="hero" id="top">
+    <div class="hero__top">
+      <p class="eyebrow" data-i18n="eyebrow">RuiC ・ PORTRAIT ATLAS ・ AI 绘画 / 角色脸 / 造型参考</p>
+
+      <div class="hero__tools">
+        <div class="lang" id="langSwitch" role="group" aria-label="切换语言" data-i18n-aria="ariaLanguage">
+          <button type="button" data-lang="zh" aria-pressed="true" aria-label="中文">中文</button>
+          <button type="button" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
+          <button type="button" data-lang="ja" aria-pressed="false" aria-label="日本語">日本語</button>
+        </div>
+
+        <nav class="info" id="info" aria-label="使用提示与注意事项" data-i18n-aria="ariaInfo">
+          <div class="info__tabs">
+            <button type="button" class="info__tab" id="infoTabTips" data-panel="panelTips" aria-expanded="false" aria-controls="panelTips" data-i18n="tabTips">使用提示</button>
+            <button type="button" class="info__tab" id="infoTabNotice" data-panel="panelNotice" aria-expanded="false" aria-controls="panelNotice" data-i18n="tabNotice">注意事项</button>
+          </div>
+          <section class="info__panel" id="panelTips" role="dialog" aria-labelledby="panelTipsTitle" tabindex="-1" hidden>
+            <div class="info__head">
+              <h2 id="panelTipsTitle" data-i18n="tipsTitle">使用提示</h2>
+              <button type="button" class="info__close" data-close-panel aria-label="关闭" data-i18n-aria="closeInfo">×</button>
+            </div>
+            <ul data-i18n-list="tips"></ul>
+          </section>
+          <section class="info__panel" id="panelNotice" role="dialog" aria-labelledby="panelNoticeTitle" tabindex="-1" hidden>
+            <div class="info__head">
+              <h2 id="panelNoticeTitle" data-i18n="noticesTitle">注意事项</h2>
+              <button type="button" class="info__close" data-close-panel aria-label="关闭" data-i18n-aria="closeInfo">×</button>
+            </div>
+            <ul data-i18n-list="notices"></ul>
+          </section>
+        </nav>
+      </div>
+    </div>
+
+    <nav class="collection" aria-label="切换图集" data-i18n-aria="ariaCollection">
+      <a class="collection__item" href="./"><span data-i18n="collectionPose">姿势图鉴</span><em>288</em></a>
+      <a class="collection__item" href="costume.html"><span data-i18n="collectionCostume">衣装图鉴</span><em>1,407</em></a>
+      <a class="collection__item" href="face.html" aria-current="page"><span data-i18n="collectionFace">人像图鉴</span><em>1,499</em></a>
+    </nav>
+
+    <h1><span class="hero__mark" data-i18n="h1a">人像图鉴</span> <span data-i18n="h1b">数据库</span></h1>
+    <p class="hero__sub" data-i18n="heroSub">AI 生成的虚构人物参考图（4:5）。脸部 893 张，正面朝向、纯背景，适合固定角色脸；造型 606 张，带服装、发型质感与整体氛围。可按发型筛选，方便逐张对照。</p>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar__inner">
+      <nav class="series" id="sectionTabs" aria-label="人像分区" data-i18n-aria="ariaSections"></nav>
+
+      <div class="controls">
+        <label class="search" for="searchInput">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="searchInput" type="search" placeholder="搜索编号 / 发型 / 风格" autocomplete="off" spellcheck="false" aria-label="搜索编号、发型或风格" data-i18n-placeholder="searchPlaceholder" data-i18n-aria="ariaSearch">
+        </label>
+
+        <button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filters">
+          <span data-i18n="filter">筛选</span><b id="filterBadge" hidden></b>
+        </button>
+
+        <div class="filters" id="filters">
+          <label class="select" for="hairSelect">
+            <span class="sr-only" data-i18n="metaHair">发型</span>
+            <select id="hairSelect"></select>
+            <svg class="select__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </label>
+        </div>
+
+        <p class="count" id="resultCount" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <main class="main" id="gallery">
+    <div class="grid grid--portrait" id="grid" aria-busy="true"></div>
+    <div class="more" id="more" hidden>
+      <button type="button" class="button button--ghost" id="moreButton" data-i18n="more">加载更多</button>
+    </div>
+    <div class="empty" id="empty" hidden>
+      <p class="empty__title" data-i18n="emptyTitle">没有匹配的人像</p>
+      <p class="empty__text" data-i18n="emptyText">换一个关键词，或清除当前的筛选条件。</p>
+      <button type="button" class="button button--ghost" id="clearFilters" data-i18n="clearFilters">清除筛选</button>
+    </div>
+    <noscript>
+      <p class="empty__title">需要启用 JavaScript 才能浏览图库。</p>
+    </noscript>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__card">
+      <p class="footer__lead" data-i18n="footerLead">RuiC · 人像图鉴 PORTRAIT ATLAS</p>
+      <p data-i18n-html="footerCredits">图片来源：AIモデル顔データベース（作者 あぎ，CC0 1.0）。</p>
+      <p data-i18n="footerLicense">本页为个人学习性质的前端重写实现；缩略图随仓库提供用于浏览，全尺寸原图不随仓库分发、按引用加载；图片权利按原站 CC0 1.0 说明。</p>
+      <p class="footer__meta" id="footerMeta">1,499 张图像 · 脸部 893 · 造型 606 · 4 种发型</p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-label="大图预览" data-i18n-aria="modalAria" hidden>
+    <div class="modal__scrim" data-close-modal></div>
+    <div class="modal__box">
+      <button type="button" class="modal__close" id="modalClose" aria-label="关闭大图" data-i18n-aria="modalClose">×</button>
+
+      <div class="viewer">
+        <div class="viewer__stage" id="viewerStage">
+          <img class="viewer__ghost" id="viewerGhost" alt="" aria-hidden="true">
+          <img class="viewer__image" id="viewerImage" alt="">
+          <div class="viewer__spinner" id="viewerSpinner" aria-hidden="true"></div>
+          <p class="viewer__error" id="viewerError" data-i18n="imageError" hidden>原图加载失败</p>
+        </div>
+        <button type="button" class="viewer__nav viewer__nav--prev" id="prevItem" aria-label="上一张" data-i18n-aria="prevItem">‹</button>
+        <button type="button" class="viewer__nav viewer__nav--next" id="nextItem" aria-label="下一张" data-i18n-aria="nextItem">›</button>
+      </div>
+
+      <aside class="panel">
+        <div class="panel__head">
+          <h2 id="modalTitle"></h2>
+          <p class="panel__id" id="modalId"></p>
+        </div>
+
+        <div class="panel__tags" id="modalTags"></div>
+
+        <dl class="panel__meta" id="modalMeta"></dl>
+
+        <a class="download" id="downloadLink" href="#" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16"/></svg>
+          <span id="downloadLabel" data-i18n="download">下载原图（全尺寸 PNG）</span>
+        </a>
+
+        <p class="panel__note" id="downloadNote" data-i18n="downloadNote">原图由原站提供；线上会在新标签页打开，本地已下载的副本可直接保存。</p>
+
+        <p class="panel__keys" data-i18n-html="keysHint"><kbd>←</kbd><kbd>→</kbd> 上一张 / 下一张　<kbd>Esc</kbd> 关闭</p>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
