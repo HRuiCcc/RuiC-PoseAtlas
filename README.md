@@ -105,6 +105,8 @@
 
 <p align="center"><sub>微信扫码赞赏 · 感谢支持</sub></p>
 
+<p align="center">微号：<strong>hrc_rch</strong>（说明来意）</p>
+
 如果暂时不方便赞赏，点一个 **Star ⭐** 或把项目分享给需要姿态 / 衣装参考的朋友，也是很大的支持。
 
 ---
